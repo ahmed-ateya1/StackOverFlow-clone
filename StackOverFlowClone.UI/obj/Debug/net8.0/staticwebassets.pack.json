@@ -5,6 +5,34 @@
       "PackagePath": "staticwebassets\\StackOverFlowClone.UI.bundle.scp.css"
     },
     {
+      "Id": "C:\\.NET Project\\StackOverFlowClone\\StackOverFlowClone.UI\\wwwroot\\Images\\avatar.png",
+      "PackagePath": "staticwebassets\\Images\\avatar.png"
+    },
+    {
+      "Id": "C:\\.NET Project\\StackOverFlowClone\\StackOverFlowClone.UI\\wwwroot\\Images\\down-color.png",
+      "PackagePath": "staticwebassets\\Images\\down-color.png"
+    },
+    {
+      "Id": "C:\\.NET Project\\StackOverFlowClone\\StackOverFlowClone.UI\\wwwroot\\Images\\down-empty.png",
+      "PackagePath": "staticwebassets\\Images\\down-empty.png"
+    },
+    {
+      "Id": "C:\\.NET Project\\StackOverFlowClone\\StackOverFlowClone.UI\\wwwroot\\Images\\map.svg",
+      "PackagePath": "staticwebassets\\Images\\map.svg"
+    },
+    {
+      "Id": "C:\\.NET Project\\StackOverFlowClone\\StackOverFlowClone.UI\\wwwroot\\Images\\up-color.png",
+      "PackagePath": "staticwebassets\\Images\\up-color.png"
+    },
+    {
+      "Id": "C:\\.NET Project\\StackOverFlowClone\\StackOverFlowClone.UI\\wwwroot\\Images\\up-empty.png",
+      "PackagePath": "staticwebassets\\Images\\up-empty.png"
+    },
+    {
+      "Id": "C:\\.NET Project\\StackOverFlowClone\\StackOverFlowClone.UI\\wwwroot\\Images\\user.png",
+      "PackagePath": "staticwebassets\\Images\\user.png"
+    },
+    {
       "Id": "C:\\.NET Project\\StackOverFlowClone\\StackOverFlowClone.UI\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },

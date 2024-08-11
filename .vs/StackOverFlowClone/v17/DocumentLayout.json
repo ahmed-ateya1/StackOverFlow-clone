@@ -1,12 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\.NET Project\\StackOverFlowClone\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{FB303C8C-CC44-49C9-A8AF-6D8E40C73281}|StackOverFlowClone.UI\\StackOverFlowClone.UI.csproj|c:\\.net project\\stackoverflowclone\\stackoverflowclone.ui\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FB303C8C-CC44-49C9-A8AF-6D8E40C73281}|StackOverFlowClone.UI\\StackOverFlowClone.UI.csproj|solutionrelative:stackoverflowclone.ui\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -14,24 +9,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\.NET Project\\StackOverFlowClone\\StackOverFlowClone.UI\\Program.cs",
-              "RelativeDocumentMoniker": "StackOverFlowClone.UI\\Program.cs",
-              "ToolTip": "C:\\.NET Project\\StackOverFlowClone\\StackOverFlowClone.UI\\Program.cs",
-              "RelativeToolTip": "StackOverFlowClone.UI\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAA3AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-11T02:35:42.666Z",
-              "EditorCaption": ""
             }
           ]
         }
