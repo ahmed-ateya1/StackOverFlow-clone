@@ -1,3 +1,5 @@
+using StackOverFlowClone.UI.StartupExtensions;
+
 namespace StackOverFlowClone.UI
 {
     public class Program
@@ -8,7 +10,7 @@ namespace StackOverFlowClone.UI
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            builder.Services.ServiceConfiguration(builder.Configuration);
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

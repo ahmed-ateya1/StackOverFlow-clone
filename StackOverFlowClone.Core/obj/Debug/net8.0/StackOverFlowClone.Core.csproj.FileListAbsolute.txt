@@ -1,0 +1,13 @@
+C:\.NET Project\StackOverFlowClone\StackOverFlowClone.Core\bin\Debug\net8.0\StackOverFlowClone.Core.deps.json
+C:\.NET Project\StackOverFlowClone\StackOverFlowClone.Core\bin\Debug\net8.0\StackOverFlowClone.Core.dll
+C:\.NET Project\StackOverFlowClone\StackOverFlowClone.Core\bin\Debug\net8.0\StackOverFlowClone.Core.pdb
+C:\.NET Project\StackOverFlowClone\StackOverFlowClone.Core\obj\Debug\net8.0\StackOverFlowClone.Core.csproj.AssemblyReference.cache
+C:\.NET Project\StackOverFlowClone\StackOverFlowClone.Core\obj\Debug\net8.0\StackOverFlowClone.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\.NET Project\StackOverFlowClone\StackOverFlowClone.Core\obj\Debug\net8.0\StackOverFlowClone.Core.AssemblyInfoInputs.cache
+C:\.NET Project\StackOverFlowClone\StackOverFlowClone.Core\obj\Debug\net8.0\StackOverFlowClone.Core.AssemblyInfo.cs
+C:\.NET Project\StackOverFlowClone\StackOverFlowClone.Core\obj\Debug\net8.0\StackOverFlowClone.Core.csproj.CoreCompileInputs.cache
+C:\.NET Project\StackOverFlowClone\StackOverFlowClone.Core\obj\Debug\net8.0\StackOverFlowClone.Core.sourcelink.json
+C:\.NET Project\StackOverFlowClone\StackOverFlowClone.Core\obj\Debug\net8.0\StackOverFlowClone.Core.dll
+C:\.NET Project\StackOverFlowClone\StackOverFlowClone.Core\obj\Debug\net8.0\refint\StackOverFlowClone.Core.dll
+C:\.NET Project\StackOverFlowClone\StackOverFlowClone.Core\obj\Debug\net8.0\StackOverFlowClone.Core.pdb
+C:\.NET Project\StackOverFlowClone\StackOverFlowClone.Core\obj\Debug\net8.0\ref\StackOverFlowClone.Core.dll
