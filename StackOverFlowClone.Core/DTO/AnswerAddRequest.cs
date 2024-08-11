@@ -9,22 +9,5 @@ namespace StackOverFlowClone.Core.DTO
 {
     public class AnswerAddRequest
     {
-        public string AnswerText { get; set; }
-        public DateTime AnswerDateAndTime { get; set; }
-        public long VotesCount { get; set; }
-        public Guid UserID { get; set; }
-        public Guid QuestionID { get; set; }
-
-        public Answer ToAnswer()
-        {
-            return new Answer()
-            {
-                AnswerDateAndTime = AnswerDateAndTime,
-                AnswerText = AnswerText,
-                VotesCount = VotesCount,
-                UserID = UserID,
-                QuestionID = QuestionID
-            };
-        }
     }
 }
