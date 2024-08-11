@@ -1,4 +1,5 @@
 ﻿using StackOverFlowClone.Core.Domain.Entites;
+using StackOverFlowClone.Core.Domain.IdentityEntites;
 using System;
 using System.Threading.Tasks;
 
@@ -32,5 +33,10 @@ namespace StackOverFlowClone.Core.Domain.RepositoryContracts
         /// <param name="answerID">The unique identifier of the answer being voted on.</param>
         /// <returns>The vote entity with the specified user and answer identifiers, or null if not found.</returns>
         Task<Vote> GetVoteById(Guid userID, Guid answerID);
+        Task<Vote> GetVoteByVoteID(Guid voteID);
+
+        Task<IEnumerable<ApplicationUser>> GetAllUserVotedInAnswer(Guid answerID);
+
+        Task<bool> DeleteVote(Guid voteID);
     }
 }

@@ -9,9 +9,6 @@ using System.Threading.Tasks;
 
 namespace StackOverFlowClone.Infrastructure.Repositories
 {
-    /// <summary>
-    /// Implements the contract for managing answer-related data operations.
-    /// </summary>
     public class AnswerRepository : IAnswerRepository
     {
         private readonly AppDbContext _db;
@@ -33,6 +30,7 @@ namespace StackOverFlowClone.Infrastructure.Repositories
             var answer = await GetAnswerByID(answerID);
             if (answer == null)
                 return false;
+
             _db.Answers.Remove(answer);
             await _db.SaveChangesAsync();
             return true;
@@ -58,9 +56,8 @@ namespace StackOverFlowClone.Infrastructure.Repositories
             var oldAnswer = await GetAnswerByID(answer.AnswerID);
             if (oldAnswer == null)
                 return null;
-            oldAnswer.AnswerText = answer.AnswerText;
-            oldAnswer.AnswerDateAndTime = answer.AnswerDateAndTime;
-            oldAnswer.VotesCount = answer.VotesCount;
+
+            _db.Entry(oldAnswer).CurrentValues.SetValues(answer);
             await _db.SaveChangesAsync();
             return oldAnswer;
         }
@@ -69,8 +66,9 @@ namespace StackOverFlowClone.Infrastructure.Repositories
         {
             var answer = await GetAnswerByID(answerID);
             if (answer == null) return;
+
             answer.VotesCount += value;
-            await _db.SaveChangesAsync(); 
+            await _db.SaveChangesAsync();
         }
     }
 }
