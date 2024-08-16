@@ -11,21 +11,20 @@ namespace StackOverFlowClone.Core.DTO
         public string QuestionName { get; set; }
 
         [Required(ErrorMessage = "Question Date and Time is required")]
-        public DateTime QuestionDateAndTime { get; set; }
+        public DateTime QuestionDateAndTime { get; set; } = DateTime.Now;
 
         [Range(0, long.MaxValue, ErrorMessage = "Votes Count must be a positive number")]
-        public long VotesCount { get; set; }
+        public long VotesCount { get; set; } = 0;
 
         [Range(0, long.MaxValue, ErrorMessage = "Answers Count must be a positive number")]
-        public long AnswersCount { get; set; }
+        public long AnswersCount { get; set; } = 0;
 
         [Range(0, long.MaxValue, ErrorMessage = "View Count must be a positive number")]
-        public long ViewCount { get; set; }
+        public long ViewCount { get; set; } = 0;
 
-        [Required(ErrorMessage = "User ID is required")]
         public Guid UserID { get; set; }
 
-        [Required(ErrorMessage = "Category ID is required")]
+        [Required(ErrorMessage = "Category is required")]
         public Guid CategoryID { get; set; }
 
         public Question ToQuestion()

@@ -34,6 +34,13 @@ namespace StackOverFlowClone.Core.Domain.RepositoryContracts
         /// <returns>The vote entity with the specified user and answer identifiers, or null if not found.</returns>
         Task<Vote> GetVoteById(Guid userID, Guid answerID);
         Task<Vote> GetVoteByVoteID(Guid voteID);
+        /// <summary>
+        /// Retrieves user is voted or not
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user who voted.</param>
+        /// <param name="answerID">The unique identifier of the answer being voted on.</param>
+        /// <returns>the vote if found return true else return false</returns>
+        Task<int> UserIsVoted(Guid userID, Guid answerID);
 
         Task<IEnumerable<ApplicationUser>> GetAllUserVotedInAnswer(Guid answerID);
 

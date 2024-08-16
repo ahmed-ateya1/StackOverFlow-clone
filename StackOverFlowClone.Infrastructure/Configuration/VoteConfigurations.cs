@@ -29,7 +29,7 @@ namespace StackOverFlowClone.Infrastructure.Configuration
             builder.HasOne(x=>x.Answer)
                 .WithMany(x=>x.Votes)
                 .HasForeignKey(x=>x.AnswerID)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.ToTable("Votes");
         }

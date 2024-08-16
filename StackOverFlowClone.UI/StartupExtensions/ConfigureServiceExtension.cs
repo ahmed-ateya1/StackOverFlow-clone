@@ -2,7 +2,11 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using StackOverFlowClone.Core.Domain.IdentityEntites;
+using StackOverFlowClone.Core.Domain.RepositoryContracts;
+using StackOverFlowClone.Core.Services;
+using StackOverFlowClone.Core.ServicesContracts;
 using StackOverFlowClone.Infrastructure.Data;
+using StackOverFlowClone.Infrastructure.Repositories;
 
 namespace StackOverFlowClone.UI.StartupExtensions
 {
@@ -21,6 +25,14 @@ namespace StackOverFlowClone.UI.StartupExtensions
                 .AddUserStore<UserStore<ApplicationUser, ApplicationRole, AppDbContext, Guid>>()
                 .AddRoleStore<RoleStore<ApplicationRole, AppDbContext, Guid>>();
 
+            services.AddScoped<IQuestionRepository, QuestionRepository>();
+            services.AddScoped<IAnswerRepository, AnswerRepository>();
+            services.AddScoped<IVoteRepository, VoteRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IQuestionServices, QuestionServices>();
+            services.AddScoped<IAnswerServices, AnswerServices>();
+            services.AddScoped<ICategoryServices, CategoryServices>();
+            services.AddScoped<IVoteServices, VoteServices>();
             return services;
 
         }

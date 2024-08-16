@@ -33,6 +33,7 @@ namespace StackOverFlowClone.Core.DTO
         /// </summary>
         public Guid UserID { get; set; }
 
+        public string UserName { get; set; }
         /// <summary>
         /// Unique identifier of the question to which the answer belongs.
         /// </summary>
@@ -58,7 +59,8 @@ namespace StackOverFlowClone.Core.DTO
                 AnswerDateAndTime = answer.AnswerDateAndTime,
                 VotesCount = answer.VotesCount,
                 UserID = answer.UserID,
-                QuestionID = answer.QuestionID
+                QuestionID = answer.QuestionID,
+                UserName = answer.User.UserName??"UnKnown"
             };
         }
     }

@@ -1,0 +1,30 @@
+﻿@model QuestionAddRequest
+@{
+    ViewData["Title"] = "AddQuestion";
+}
+<a asp-action="Index" asp-controller="Question" class="btn btn-primary mb-3 mt-3">
+    <i class="bi bi-skip-backward-btn-fill"></i>
+    Back
+</a>
+<h2>Add Question</h2>
+
+<form asp-action="AddQuestion" asp-controller="Question" method="post">
+    <div class="form-floating w-75 mt-2">
+        <textarea asp-for="QuestionName" class="form-control" placeholder="Leave a Question Here" id="floatingTextarea2" style="height: 100px" maxlength="1000"></textarea>
+        <label asp-for="QuestionName" for="floatingTextarea2">Question</label>
+        <span asp-validation-for="QuestionName" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-2 w-75">
+        <label asp-for="CategoryID" class="form-label font-monospace">Category: </label>
+        <select asp-for="CategoryID" asp-items="ViewBag.categoryList" class="form-select" required>
+            <option value="">--Select Category--</option>
+        </select>
+        <span asp-validation-for="CategoryID" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">
+        Save
+    </button>
+</form>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"></partial>
+}

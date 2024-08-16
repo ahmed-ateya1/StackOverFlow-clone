@@ -1,0 +1,85 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<QuestionResponse>
+<form asp-action="Index" asp-controller="Question" method="get">
+    <div class="container mt-3">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="input-group mb-3">
+                    <input name="searchString" value="@ViewBag.searchString" type="text" class="form-control" placeholder="Search for Question..." aria-label="Search for questions" aria-describedby="button-search">
+                    <button class="btn btn-primary" type="submit" id="button-search">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<a asp-action="AddQuestion" asp-controller="Question" class="btn btn-primary mb-3 mt-3">
+    Add Question
+</a>
+
+<table class="table table-hover mt-3">
+    <tbody>
+        @foreach (var question in Model)
+        {
+            <tr>
+                <td class="text-center align-middle">
+                    <span class="badge bg-secondary">
+                        @question.VotesCount
+                    </span>
+                    <span>Votes</span>
+                </td>
+                <td class="text-center align-middle">
+                    <span class="badge bg-secondary">
+                        @question.AnswersCount
+                    </span>
+                    <span>Answers</span>
+                </td>
+                <td class="text-center align-middle">
+                    <span class="badge bg-secondary">
+                        @question.ViewCount
+                    </span>
+                    <span>Views</span>
+                </td>
+                <td>
+
+                    <a asp-action="QuestionDetails" asp-controller="Question" asp-route-questionID ="@question.QuestionID" class="text-decoration-none fw-bold">
+                        @question.QuestionName
+                    </a>
+                    <br />
+                    <span class="badge bg-info text-dark mt-1">
+                        @question.CategoryName
+                    </span>
+                </td>
+                <td class="text-muted">
+                    @if (User.Identity.IsAuthenticated && question.UserID == ViewBag.userID)
+                    {
+                        @: You
+                    }
+                    else
+                    {
+                        @question.UserName
+                    }
+                </td>
+                <td class="text-muted">
+                    on: @question.QuestionDateAndTime.ToString("MMM dd, yyyy hh:mm tt")
+                </td>
+                <td>
+                    @if (User.Identity.IsAuthenticated && question.UserID == ViewBag.userID)
+                    {
+
+                        <a asp-action="EditQuestion" asp-controller="Question" asp-route-questionID="@question.QuestionID" style="color:#214d5a">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+
+                        <a asp-action="DeleteQuestion" asp-controller="Question" asp-route-questionID="@question.QuestionID" style="color:red" onclick="alert('Are You Okay')">
+                            <i class="bi bi-trash3"></i>
+                        </a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -31,7 +31,7 @@ namespace StackOverFlowClone.Infrastructure.Configuration
             builder.HasOne(x=>x.Question)
                 .WithMany(x=>x.Answers)
                 .HasForeignKey(x=>x.QuestionID)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(x=>x.User)
                 .WithMany(x=>x.Answers)

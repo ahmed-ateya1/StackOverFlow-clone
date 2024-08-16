@@ -38,17 +38,25 @@ namespace StackOverFlowClone.Infrastructure.Repositories
 
         public async Task<IEnumerable<Answer>> GetAllAnswerForQuestion(Guid questionID)
         {
-            return await _db.Answers.Where(x => x.QuestionID == questionID).ToListAsync();
+            return await _db.Answers.Include(x=>x.User)
+                .Include(x=>x.Question)
+                .Include(x => x.Votes)
+                .Where(x => x.QuestionID == questionID).ToListAsync();
         }
 
         public async Task<IEnumerable<Answer>> GetAllAnswers()
         {
-            return await _db.Answers.ToListAsync();
+            return await _db.Answers.Include(x => x.User)
+                .Include(x => x.Question)
+                .Include(x=>x.Votes)
+                .ToListAsync();
         }
 
         public async Task<Answer> GetAnswerByID(Guid answerID)
         {
-            return await _db.Answers.FirstOrDefaultAsync(x => x.AnswerID == answerID);
+            return await _db.Answers.Include(x => x.User)
+                .Include(x => x.Question)
+                .Include(x => x.Votes).FirstOrDefaultAsync(x => x.AnswerID == answerID);
         }
 
         public async Task<Answer> UpdateAnswer(Answer answer)
@@ -62,13 +70,19 @@ namespace StackOverFlowClone.Infrastructure.Repositories
             return oldAnswer;
         }
 
-        public async Task UpdateVotesCount(Guid answerID, int value)
+        public async Task<bool> UpdateVotesCount(Guid answerID, int voteValue)
         {
-            var answer = await GetAnswerByID(answerID);
-            if (answer == null) return;
+            var answer = await _db.Answers.FindAsync(answerID);
+            if (answer == null)
+            {
+                throw new InvalidOperationException("Answer not found");
+            }
 
-            answer.VotesCount += value;
+            answer.VotesCount += voteValue;
+            _db.Answers.Update(answer);
             await _db.SaveChangesAsync();
+            return true;
         }
+
     }
 }

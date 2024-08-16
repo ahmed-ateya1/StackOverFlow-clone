@@ -67,7 +67,9 @@ namespace StackOverFlowClone.Infrastructure.Repositories
         /// <returns>The vote entity if found, otherwise null.</returns>
         public async Task<Vote> GetVoteById(Guid userID, Guid answerID)
         {
-            return await _db.Votes.FirstOrDefaultAsync(x => x.UserID == userID && x.AnswerID == answerID);
+            return await _db.Votes.Include(x => x.User)
+                                  .Include(x => x.Answer)
+                                  .FirstOrDefaultAsync(x => x.UserID == userID && x.AnswerID == answerID);
         }
 
         /// <summary>
@@ -77,7 +79,8 @@ namespace StackOverFlowClone.Infrastructure.Repositories
         /// <returns>The vote entity if found, otherwise null.</returns>
         public async Task<Vote> GetVoteByVoteID(Guid voteID)
         {
-            return await _db.Votes.FirstOrDefaultAsync(x => x.VoteID == voteID);
+            return await _db.Votes.Include(x => x.User)
+                .Include(x => x.Answer).FirstOrDefaultAsync(x => x.VoteID == voteID);
         }
 
         /// <summary>
@@ -109,6 +112,14 @@ namespace StackOverFlowClone.Infrastructure.Repositories
             }
 
             return vote;
+        }
+
+        public async Task<int> UserIsVoted(Guid userID, Guid answerID)
+        {
+            var vote = await _db.Votes.FirstOrDefaultAsync(x=>x.UserID==userID && x.AnswerID == answerID);
+            if( vote == null )
+                return 0;
+            return vote.VoteValue;
         }
 
         /// <summary>

@@ -94,12 +94,13 @@ namespace StackOverFlowClone.Core.Services
             return answer.ToAnswerResponse();
         }
 
-        public async Task UpdateVotesCountAsync(Guid? answerID, int voteValue)
+        public async Task<bool> UpdateVotesCountAsync(Guid? answerID, int voteValue)
         {
+        
             if (answerID == null)
                 throw new ArgumentNullException(nameof(answerID));
 
-            await _answerRepository.UpdateVotesCount(answerID.Value, voteValue);
+            return await _answerRepository.UpdateVotesCount(answerID.Value, voteValue);
         }
     }
 }

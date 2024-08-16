@@ -49,11 +49,46 @@ namespace StackOverFlowClone.Core.Services
             return true;
         }
 
+        public async Task<IEnumerable<QuestionResponse>> GetAllFilteredQuestions(string? searchString)
+        {
+            if (String.IsNullOrEmpty(searchString))
+                return await GetAllQuestionsAsync();
+
+            searchString = searchString.ToLower();
+
+            var filterdQuestions = (await _questionRepository
+                .GetFilteredQuestions(x => x.QuestionName.ToLower().Contains(searchString))).ToList();
+
+            return filterdQuestions.Select(x=>x.ToQuestionResponse());
+        }
+
+        public async Task<IEnumerable<QuestionResponse>> GetAllQuestionForSpecificUserAsync(Guid? userID)
+        {
+            if (userID == null)
+                throw new ArgumentNullException();
+            
+            var questions = await _questionRepository.GetAllQuestionForSpecificUser(userID.Value);
+            
+            return questions.Select(x=>x.ToQuestionResponse());
+        }
+
         public async Task<IEnumerable<QuestionResponse>> GetAllQuestionsAsync()
         {
             var questions = await _questionRepository.GetAllQuestions();
 
             return questions.Select(x => x.ToQuestionResponse());
+        }
+
+        public async Task<QuestionResponse> GetQuestionByAnswerIdAsync(Guid? answerID)
+        {
+            if(!answerID.HasValue)
+                throw new ArgumentNullException();
+
+            var question = await _questionRepository.GetQuestionByAnswerIdAsync(answerID.Value);
+            if (question == null)
+                throw new ArgumentNullException();
+
+            return question.ToQuestionResponse();
         }
 
         public async Task<QuestionResponse> GetQuestionByIDAsync(Guid? questionID)
@@ -82,7 +117,7 @@ namespace StackOverFlowClone.Core.Services
             await _questionRepository.UpdateQuestionViewsCount(questionID.Value); 
         }
 
-        public async Task UpdateAnswersCountAsync(Guid? questionID, int answersCount)
+        public async Task UpdateAnswersCountAsync(Guid? questionID, int answersCount = 1)
         {
             if (questionID == null)
                 throw new ArgumentNullException(nameof(questionID));
@@ -94,25 +129,21 @@ namespace StackOverFlowClone.Core.Services
             await _questionRepository.UpdateQuestionAnswersCount(questionID.Value, answersCount);
         }
 
-        public async Task<QuestionResponse> UpdateQuestionAsync(Guid? questionID, QuestionAddRequest? request)
+        public async Task<QuestionResponse> UpdateQuestionAsync(QuestionUpdateRequest? questionRequest)
         {
-            if (questionID == null && request == null)
-                throw new ArgumentNullException(nameof(questionID));
+            if (questionRequest == null)
+                throw new ArgumentNullException(nameof(questionRequest));
 
-            ValidationModel.ValidateModel(request);
+            ValidationModel.ValidateModel(questionRequest);
+            var question = await _questionRepository.GetQuestionByID(questionRequest.QuestionID);
 
-            var question = await _questionRepository.GetQuestionByID(questionID.Value);
-
-            if(question == null)
+            if (question == null)
                 throw new ArgumentNullException();
 
-            question.QuestionName = request.QuestionName;
+            questionRequest.UserID = question.UserID;
+            question.QuestionName = questionRequest.QuestionName;
             question.QuestionDateAndTime = DateTime.Now;
-            question.AnswersCount = request.AnswersCount;
-            question.ViewCount = request.ViewCount;
-            question.VotesCount = request.VotesCount;
-            question.UserID = request.UserID;
-            question.CategoryID = request.CategoryID;
+            question.CategoryID = questionRequest.CategoryID;
 
             await _questionRepository.UpdateQuestion(question);
 

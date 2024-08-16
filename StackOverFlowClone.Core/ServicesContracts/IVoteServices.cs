@@ -31,7 +31,14 @@ namespace StackOverFlowClone.Core.ServicesContracts
         /// <param name="voteID">The unique identifier of the vote.</param>
         /// <returns>A boolean indicating whether the deletion was successful.</returns>
         Task<bool> DeleteVoteAsync(Guid? voteID);
-
+        /// <summary>
+        /// Retrieves user is voted or not
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user who voted.</param>
+        /// <param name="answerID">The unique identifier of the answer being voted on.</param>
+        /// <returns>the vote if found return true else return false</returns>
+        Task<int> UserIsVotedAsync(Guid? userID, Guid? answerID);
+        Task<VoteResponse> GetVoteByVoteID(Guid? voteID);
         Task<IEnumerable<ApplicationUser>> GetAllUserVotedInAnswer(Guid? answerID);
     }
 }

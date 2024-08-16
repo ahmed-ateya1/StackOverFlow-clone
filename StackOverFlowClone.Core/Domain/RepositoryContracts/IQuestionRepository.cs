@@ -1,6 +1,7 @@
 ﻿using StackOverFlowClone.Core.Domain.Entites;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace StackOverFlowClone.Core.Domain.RepositoryContracts
@@ -43,6 +44,19 @@ namespace StackOverFlowClone.Core.Domain.RepositoryContracts
         /// </summary>
         /// <returns>An enumerable collection of all question entities.</returns>
         Task<IEnumerable<Question>> GetAllQuestions();
+        /// <summary>
+        /// filterd questions from the database.
+        /// </summary>
+        /// <returns>An enumerable collection of all question entities.</returns>
+        Task<IEnumerable<Question>> GetFilteredQuestions(Expression<Func<Question,bool>> predict);
+        /// <summary>
+        /// Retrieves all questions from the database to specific user.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the user.</param>
+        /// <returns>An enumerable collection of all question entities.</returns>
+        Task<IEnumerable<Question>> GetAllQuestionForSpecificUser(Guid userID);
+
+        Task<Question> GetQuestionByAnswerIdAsync(Guid answerID);
 
         /// <summary>
         /// Updates the number of answers for a specific question.

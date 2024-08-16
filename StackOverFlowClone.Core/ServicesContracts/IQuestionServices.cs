@@ -1,4 +1,5 @@
-﻿using StackOverFlowClone.Core.DTO;
+﻿using StackOverFlowClone.Core.Domain.Entites;
+using StackOverFlowClone.Core.DTO;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace StackOverFlowClone.Core.ServicesContracts
         /// <param name="questionID">The unique identifier of the question to update.</param>
         /// <param name="request">The request containing updated question details.</param>
         /// <returns>The updated question's response DTO.</returns>
-        Task<QuestionResponse> UpdateQuestionAsync(Guid? questionID, QuestionAddRequest? request);
+        Task<QuestionResponse> UpdateQuestionAsync(QuestionUpdateRequest? questionRequest);
 
         /// <summary>
         /// Deletes a question by its unique identifier.
@@ -38,12 +39,22 @@ namespace StackOverFlowClone.Core.ServicesContracts
         /// <returns>A collection of response DTOs for all questions.</returns>
         Task<IEnumerable<QuestionResponse>> GetAllQuestionsAsync();
 
+        Task<IEnumerable<QuestionResponse>> GetAllFilteredQuestions(string? searchString);
+        /// <summary>
+        /// Retrieves all questions for specific user by its unique identifier.
+        /// </summary>
+        /// <param name="userID">The unique identifier of the question to retrieve.</param>
+        /// <returns>A collection of response DTOs for all questions.</returns>
+        Task<IEnumerable<QuestionResponse>> GetAllQuestionForSpecificUserAsync(Guid? userID);
+
         /// <summary>
         /// Retrieves a specific question by its unique identifier.
         /// </summary>
         /// <param name="questionID">The unique identifier of the question to retrieve.</param>
         /// <returns>The response DTO of the retrieved question.</returns>
         Task<QuestionResponse> GetQuestionByIDAsync(Guid? questionID);
+
+        Task<QuestionResponse> GetQuestionByAnswerIdAsync(Guid? answerID);
 
         /// <summary>
         /// Updates the vote count for a specific question.

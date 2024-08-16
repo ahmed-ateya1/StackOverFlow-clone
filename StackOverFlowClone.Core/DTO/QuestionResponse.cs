@@ -1,9 +1,4 @@
 ﻿using StackOverFlowClone.Core.Domain.Entites;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StackOverFlowClone.Core.DTO
 {
@@ -16,8 +11,11 @@ namespace StackOverFlowClone.Core.DTO
         public long AnswersCount { get; set; }
         public long ViewCount { get; set; }
         public Guid UserID { get; set; }
+        public string UserName { get; set; }
         public Guid CategoryID { get; set; }
+        public string CategoryName { get; set; }
     }
+
     public static class QuestionExtension
     {
         public static QuestionResponse ToQuestionResponse(this Question question)
@@ -31,7 +29,9 @@ namespace StackOverFlowClone.Core.DTO
                 VotesCount = question.VotesCount,
                 ViewCount = question.ViewCount,
                 CategoryID = question.CategoryID,
-                UserID = question.UserID
+                UserID = question.UserID,
+                UserName = question.User?.UserName ?? "Unknown User",
+                CategoryName = question.Category?.CategoryName ?? "Unknown Category"
             };
         }
     }

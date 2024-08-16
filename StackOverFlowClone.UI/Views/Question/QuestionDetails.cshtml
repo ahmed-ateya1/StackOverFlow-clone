@@ -1,0 +1,243 @@
+﻿
+@model QuestionDetailsViewModel
+@inject IVoteServices _voteServices
+@{
+    ViewData["Title"] = "Question Details";
+}
+<style>
+    .container {
+        margin-top: 20px;
+    }
+
+    .card {
+        border-radius: 10px;
+        border: none;
+    }
+
+    .card-header {
+        border-bottom: none;
+        border-radius: 10px 10px 0 0;
+        padding: 20px;
+    }
+
+    .bg-primary {
+        background-color: #0073b1;
+    }
+
+    .bg-secondary {
+        background-color: #6c757d;
+    }
+
+    .bg-success {
+        background-color: #28a745;
+    }
+
+    .card-header h2, .card-header h4 {
+        color: #ffffff;
+        font-size: 1.8em;
+        font-weight: bold;
+        margin-bottom: 0;
+    }
+
+    .card-body {
+        padding: 20px;
+        background-color: #f7f8fa;
+        border-radius: 0 0 10px 10px;
+    }
+
+        .card-body .badge {
+            font-size: 1em;
+            padding: 0.5em 1em;
+        }
+
+        .card-body .text-muted {
+            font-size: 0.9em;
+        }
+
+        .card-body hr {
+            border-top: 1px solid #e0e0e0;
+        }
+
+    .stats-box {
+        background-color: #ffffff;
+        padding: 15px;
+        border-radius: 5px;
+        border: 1px solid #e0e0e0;
+        margin-bottom: 15px;
+    }
+
+        .stats-box h5 {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        .stats-box small {
+            font-size: 0.9em;
+        }
+
+    .answer {
+        padding: 10px;
+        background-color: #ffffff;
+        border-radius: 5px;
+        border: 1px solid #e0e0e0;
+    }
+
+    .card-footer {
+        background-color: #ffffff;
+        border-radius: 0 0 10px 10px;
+        padding: 10px;
+    }
+
+    .vote-container {
+        position: relative;
+        display: inline-block;
+        width: 24px; 
+        height: 48px;
+    }
+
+    .vote-button {
+        position: absolute;
+        width: 100%;
+        height: 50%;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    .up-vote {
+        top: 0;
+        z-index: 1;
+    }
+
+        .up-vote:hover {
+            color: green;
+        }
+
+    .down-vote {
+        bottom: 0;
+        z-index: 0;
+    }
+
+        .down-vote:hover {
+            color: red;
+        }
+
+</style>
+<a asp-action="Index" asp-controller="Question" class="btn btn-primary mb-3 mt-3">
+    <i class="bi bi-skip-backward-btn-fill"></i>
+    Back
+</a>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow-lg mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="card-title mb-0">@Model.Question.QuestionName</h2>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="badge bg-info text-dark">@Model.Question.CategoryName</span>
+                        <small class="text-muted">Asked by <strong>@Model.Question.UserName</strong> on @Model.Question.QuestionDateAndTime.ToString("f")</small>
+                    </div>
+                    <hr />
+                    <div class="row text-center">
+                        <div class="col-md-4">
+                            <div class="stats-box">
+                                <h5 class="mb-0">@Model.Question.VotesCount</h5>
+                                <small class="text-muted">Votes</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="stats-box">
+                                <h5 class="mb-0">@Model.Question.ViewCount</h5>
+                                <small class="text-muted">Views</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="stats-box">
+                                <h5 class="mb-0">@Model.Question.AnswersCount</h5>
+                                <small class="text-muted">Answers</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted text-center">
+                    <small>&copy; @DateTime.Now.Year - StackOverflow Clone</small>
+                </div>
+            </div>
+
+            <!-- Answers Section -->
+            <div class="card shadow-lg mb-4">
+                <div class="card-header bg-secondary text-white">
+                    <h4 class="mb-0">Answers (@Model.Answers.Count())</h4>
+                </div>
+                <div class="card-body">
+                    @foreach (var answer in Model.Answers)
+                    {
+                        <div class="answer mb-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">Answered by <strong>@answer.UserName</strong> on @answer.AnswerDateAndTime.ToString("f")</small>
+                            </div>
+                            <p class="mt-2">@answer.AnswerText</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="vote-container">
+                                    @{
+                                        int voteValue = await _voteServices.UserIsVotedAsync(answer.UserID, answer.AnswerID);
+                                    }
+
+                                    <!-- Upvote button -->
+                                    <form asp-action="ActionVote" asp-controller="Answer" asp-route-AnswerID="@answer.AnswerID" method="post">
+                                        <input type="hidden" name="VoteValue" value="@(voteValue == 1 ? 0 : 1)" />
+                                        <button type="submit" class="vote-button up-vote" style="color:@(voteValue == 1 ? "green" : "inherit")">
+                                            <i class="bi bi-arrow-up-square"></i>
+                                        </button>
+                                    </form>
+
+                                    <!-- Downvote button -->
+                                    <form asp-action="ActionVote" asp-controller="Answer" asp-route-AnswerID="@answer.AnswerID" method="post">
+                                        <input type="hidden" name="VoteValue" value="@(voteValue == -1 ? 0 : -1)" />
+                                        <button type="submit" class="vote-button down-vote" style="color:@(voteValue == -1 ? "red" : "inherit")">
+                                            <i class="bi bi-arrow-down-square"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                <span class="badge bg-primary" id="votes-count-@answer.AnswerID">@answer.VotesCount</span>
+                            </div>
+                            <hr />
+                        </div>
+                    }
+
+
+                </div>
+            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="card shadow-lg">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0">Your Answer</h4>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-primary mb-3" id="replyButton" onclick="toggleReplyForm()">Reply</button>
+                        <div id="replyForm" class="d-none">
+                            <form method="post" asp-action="ReplyToQuestion" asp-controller="Answer">
+                                <div class="form-group">
+                                    <textarea class="form-control" name="AnswerText" rows="5" placeholder="Enter your answer here..." required></textarea>
+                                </div>
+                                <input type="hidden" name="QuestionID" value="@Model.Question.QuestionID" />
+                                <button type="submit" class="btn btn-success mt-3">Submit Answer</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+            
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleReplyForm() {
+        var replyForm = document.getElementById('replyForm');
+        replyForm.classList.toggle('d-none');
+    }
+</script>

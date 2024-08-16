@@ -378,7 +378,7 @@ namespace StackOverFlowClone.Infrastructure.Migrations
                     b.HasOne("StackOverFlowClone.Core.Domain.Entites.Question", "Question")
                         .WithMany("Answers")
                         .HasForeignKey("QuestionID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("StackOverFlowClone.Core.Domain.IdentityEntites.ApplicationUser", "User")
@@ -416,7 +416,7 @@ namespace StackOverFlowClone.Infrastructure.Migrations
                     b.HasOne("StackOverFlowClone.Core.Domain.Entites.Answer", "Answer")
                         .WithMany("Votes")
                         .HasForeignKey("AnswerID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("StackOverFlowClone.Core.Domain.IdentityEntites.ApplicationUser", "User")

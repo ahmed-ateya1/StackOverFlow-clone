@@ -57,6 +57,6 @@ namespace StackOverFlowClone.Core.Domain.RepositoryContracts
         /// <param name="answerID">The unique identifier of the answer.</param>
         /// <param name="value">The number of votes to add or subtract.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        Task UpdateVotesCount(Guid answerID, int value);
+        Task<bool> UpdateVotesCount(Guid answerID, int value);
     }
 }

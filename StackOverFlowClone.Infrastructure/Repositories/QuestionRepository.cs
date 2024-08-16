@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StackOverFlowClone.Core.Domain.Entites;
 using StackOverFlowClone.Core.Domain.RepositoryContracts;
+using StackOverFlowClone.Core.ServicesContracts;
 using StackOverFlowClone.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,10 +18,12 @@ namespace StackOverFlowClone.Infrastructure.Repositories
         /// Implements the contract for managing category-related data operations.
         /// </summary>
         private readonly AppDbContext _db;
+        private readonly IAnswerServices _answerServices;
 
-        public QuestionRepository(AppDbContext db)
+        public QuestionRepository(AppDbContext db , IAnswerServices answerServices)
         {
             _db = db;
+            _answerServices = answerServices;
         }
 
         public async Task<Question> CreateQuestion(Question question)
@@ -39,14 +43,47 @@ namespace StackOverFlowClone.Infrastructure.Repositories
             return true;
         }
 
+        
+
+        public async Task<IEnumerable<Question>> GetAllQuestionForSpecificUser(Guid userID)
+        {
+            return await _db.Qustions.Include(x=>x.User)
+                .Include(x=>x.Category)
+                .Include(x=>x.Answers)
+                .Where(x => x.UserID == userID).ToListAsync();
+        }
+
         public async Task<IEnumerable<Question>> GetAllQuestions()
         {
-           return await _db.Qustions.ToListAsync();
+           return await _db.Qustions.Include(x => x.User)
+                .Include(x => x.Category)
+                .Include(x => x.Answers).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Question>> GetFilteredQuestions(Expression<Func<Question, bool>> predict)
+        {
+           return await _db.Qustions.Include(x=>x.User)
+                .Include(x=>x.Answers)
+                .Include(x=>x.Category)
+                .Where(predict)
+                .ToListAsync();
+        }
+
+        public async Task<Question> GetQuestionByAnswerIdAsync(Guid answerID)
+        {
+            var answer = await _answerServices.GetAnswerByIDAsync(answerID);
+            
+            var question = await GetQuestionByID(answer.QuestionID);
+
+            return question;
+                
         }
 
         public async Task<Question> GetQuestionByID(Guid questionID)
         {
-            return await _db.Qustions.FirstOrDefaultAsync(x => x.QuestionID == questionID);
+            return await _db.Qustions.Include(x => x.User)
+                .Include(x => x.Category)
+                .Include(x => x.Answers).FirstOrDefaultAsync(x => x.QuestionID == questionID);
         }
 
         public async Task<Question> UpdateQuestion(Question question)
@@ -57,9 +94,6 @@ namespace StackOverFlowClone.Infrastructure.Repositories
             Oldquestion.QuestionName = question.QuestionName;
             Oldquestion.QuestionDateAndTime = question.QuestionDateAndTime;
             Oldquestion.CategoryID = question.CategoryID;
-            Oldquestion.AnswersCount = question.AnswersCount;
-            Oldquestion.ViewCount = question.ViewCount;
-            Oldquestion.VotesCount = question.VotesCount;
             await _db.SaveChangesAsync();
             return Oldquestion;
         }

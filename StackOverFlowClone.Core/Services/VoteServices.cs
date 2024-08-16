@@ -59,12 +59,29 @@ namespace StackOverFlowClone.Core.Services
 
         public async Task<VoteResponse> GetVoteAsync(Guid? userID, Guid? answerID)
         {
-            if( userID == null || answerID ==null) 
-                throw new ArgumentNullException( nameof(userID));
+            if (userID == null || answerID == null)
+                throw new ArgumentNullException(userID == null ? nameof(userID) : nameof(answerID));
 
-            var vote =  await _voteRepository.GetVoteById(userID.Value, answerID.Value);
+            var vote = await _voteRepository.GetVoteById(userID.Value, answerID.Value);
+            return vote?.ToVoteResponse();
+        }
+
+        public async Task<VoteResponse> GetVoteByVoteID(Guid? voteID)
+        {
+            if( voteID == null)
+                throw new ArgumentNullException(nameof(voteID));
+
+            var vote = await _voteRepository.GetVoteByVoteID(voteID.Value);
 
             return vote.ToVoteResponse();
+        }
+
+        public async Task<int> UserIsVotedAsync(Guid? userID, Guid? answerID)
+        {
+           if(userID == null || answerID == null)
+                throw new ArgumentNullException(nameof(userID));
+
+           return await _voteRepository.UserIsVoted(userID.Value,answerID.Value);
         }
     }
 }

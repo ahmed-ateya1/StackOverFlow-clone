@@ -15,6 +15,7 @@ namespace StackOverFlowClone.Core.DTO
         public Guid AnswerID { get; set; }
         public int VoteValue { get; set; }
     }
+
     public static class VoteExtension
     {
         public static VoteResponse ToVoteResponse(this Vote vote)
@@ -28,4 +29,5 @@ namespace StackOverFlowClone.Core.DTO
             };
         }
     }
+
 }

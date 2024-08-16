@@ -11,15 +11,19 @@ namespace StackOverFlowClone.Core.DTO
 {
     public class VoteAddRequest
     {
-        [Required(ErrorMessage = "{0} is required")]
         public Guid UserID { get; set; }
+
         [Required(ErrorMessage = "{0} is required")]
-        public Guid AnswerID { get; set; }
+        public Guid AnswerID { get; set; } = Guid.Empty;
+
         [Required(ErrorMessage = "{0} is required")]
         public int VoteValue { get; set; }
 
         public Vote ToVote()
         {
+            if (AnswerID == Guid.Empty)
+                throw new InvalidOperationException("AnswerID cannot be an empty GUID.");
+
             return new Vote
             {
                 UserID = UserID,
@@ -28,4 +32,5 @@ namespace StackOverFlowClone.Core.DTO
             };
         }
     }
+
 }

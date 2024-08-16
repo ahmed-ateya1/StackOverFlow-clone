@@ -20,18 +20,17 @@ namespace StackOverFlowClone.Core.DTO
         /// Date and time when the answer is posted.
         /// </summary>
         [Required(ErrorMessage = "Answer Date and Time is required")]
-        public DateTime AnswerDateAndTime { get; set; }
+        public DateTime AnswerDateAndTime { get; set; } = DateTime.Now;
 
         /// <summary>
         /// Initial vote count for the answer.
         /// </summary>
         [Range(0, long.MaxValue, ErrorMessage = "Votes Count must be a positive number")]
-        public long VotesCount { get; set; }
+        public long VotesCount { get; set; } = 0;
 
         /// <summary>
         /// Unique identifier of the user posting the answer.
         /// </summary>
-        [Required(ErrorMessage = "User ID is required")]
         public Guid UserID { get; set; }
 
         /// <summary>

@@ -52,6 +52,6 @@ namespace StackOverFlowClone.Core.ServicesContracts
         /// <param name="answerID">The unique identifier of the answer.</param>
         /// <param name="voteValue">The value to increment or decrement the vote count by.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        Task UpdateVotesCountAsync(Guid? answerID, int voteValue);
+        Task<bool> UpdateVotesCountAsync(Guid? answerID, int voteValue);
     }
 }
