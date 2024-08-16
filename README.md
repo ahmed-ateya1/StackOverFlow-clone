@@ -105,8 +105,6 @@ Ensure you have the following installed on your machine:
     dotnet run
     ```
 
-    - The application will be available at `https://localhost:5001` or `http://localhost:5000`.
-
 ### Usage
 
 1. **Register a new account** or log in with an existing one.
