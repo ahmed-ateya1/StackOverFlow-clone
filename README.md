@@ -1,4 +1,4 @@
-Certainly! Below is a sample `README.md` file you can use for your project on GitHub, which includes a project description, features, setup instructions, and more.
+Here is the updated `README.md` with the project structure highlighted to show that you're using clean architecture:
 
 ---
 
@@ -27,6 +27,48 @@ This project is a simplified clone of the popular StackOverflow platform, built 
 - **SQL Server**: The relational database used for data storage.
 - **Razor Pages**: For rendering dynamic content on the web pages.
 - **JavaScript**: For handling client-side interactivity.
+
+## Clean Architecture
+
+This project follows the principles of Clean Architecture, ensuring separation of concerns and maintainability. The solution is divided into several layers:
+
+### Project Structure
+
+#### Core Layer
+
+- **Domain**
+  - **Entities**: Contains the core business entities.
+  - **IdentityEntities**: Contains identity-related entities.
+  - **RepositoryContracts**: Contains interface definitions for repositories.
+
+- **DTO**
+  - **AnswerAddRequest.cs**
+  - **AnswerResponse.cs**
+  - **AnswerUpdateRequest.cs**
+  - **CategoryAddRequest.cs**
+  - **CategoryResponse.cs**
+  - **CategoryUpdateRequest.cs**
+  - **LoginDTO.cs**
+  - **QuestionAddRequest.cs**
+  - **QuestionResponse.cs**
+  - **QuestionUpdateRequest.cs**
+  - **RegisterDTO.cs**
+  - **VoteAddRequest.cs**
+  - **VoteResponse.cs**
+
+- **Enumeration**
+  - **Helper**
+  - **Services**
+  - **ServiceContracts**
+
+#### Infrastructure Layer
+
+- **Configuration**
+- **Data**
+- **Migrations**
+- **Repositories**
+
+![Project Structure](path/to/your/image.png)
 
 ## Getting Started
 
@@ -75,19 +117,14 @@ Ensure you have the following installed on your machine:
 5. **Vote on answers** by clicking the upvote or downvote buttons.
 6. **Edit or delete** your own questions and answers by using the provided icons.
 
-### Folder Structure
-
-- **Controllers**: Contains all the controllers that handle HTTP requests.
-- **Models**: Contains the domain models and DTOs.
-- **Views**: Contains the Razor views used to render HTML pages.
-- **Services**: Contains the business logic and service classes.
-- **Data**: Contains the database context and migrations.
-
 ### Contributing
 
 Contributions are welcome! Please fork the repository and use a feature branch. Pull requests should include tests and follow the coding standards used in this project.
 
-
 ### Contact
 
-If you have any questions or feedback, feel free to contact the project maintainer at your. ahmed.ateya12348@gmail.con
+If you have any questions or feedback, feel free to contact the project maintainer at your.email@example.com.
+
+---
+
+Make sure to update the image path (`path/to/your/image.png`) with the correct path to the image file in your repository.
