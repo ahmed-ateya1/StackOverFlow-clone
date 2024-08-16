@@ -1,7 +1,3 @@
-Here is the updated `README.md` with the project structure highlighted to show that you're using clean architecture:
-
----
-
 # StackOverflow Clone
 
 ## Description
