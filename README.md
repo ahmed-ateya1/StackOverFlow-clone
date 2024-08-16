@@ -68,7 +68,6 @@ This project follows the principles of Clean Architecture, ensuring separation o
 - **Migrations**
 - **Repositories**
 
-![Project Structure](path/to/your/image.png)
 
 ## Getting Started
 
