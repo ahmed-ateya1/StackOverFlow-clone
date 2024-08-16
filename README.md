@@ -122,6 +122,3 @@ Contributions are welcome! Please fork the repository and use a feature branch. 
 
 If you have any questions or feedback, feel free to contact the project maintainer at your.email@example.com.
 
----
-
-Make sure to update the image path (`path/to/your/image.png`) with the correct path to the image file in your repository.
