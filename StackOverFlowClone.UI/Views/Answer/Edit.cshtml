@@ -1,0 +1,41 @@
+﻿@model StackOverFlowClone.Core.DTO.AnswerUpdateRequest
+
+@{
+    ViewData["Title"] = "Edit Answer";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h4>Edit Answer</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <input type="hidden" asp-for="AnswerID" />
+                        <input type="hidden" asp-for="QuestionID" />
+                        <input type="hidden" asp-for="UserID" />
+                        <input type="hidden" asp-for="VotesCount" />
+                        <input type="hidden" asp-for="AnswerDateAndTime" />
+
+                        <div class="form-group mb-3">
+                            <label asp-for="AnswerText" class="form-label"></label>
+                            <textarea asp-for="AnswerText" class="form-control" rows="6"></textarea>
+                            <span asp-validation-for="AnswerText" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-success">Save Changes</button>
+                        <a asp-action="QuestionDetails" asp-route-questionID="@Model.QuestionID" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

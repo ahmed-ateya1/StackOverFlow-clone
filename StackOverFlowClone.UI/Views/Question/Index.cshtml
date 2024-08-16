@@ -66,19 +66,37 @@
                 <td class="text-muted">
                     on: @question.QuestionDateAndTime.ToString("MMM dd, yyyy hh:mm tt")
                 </td>
-                <td>
+                <td class="text-end">
                     @if (User.Identity.IsAuthenticated && question.UserID == ViewBag.userID)
                     {
-
-                        <a asp-action="EditQuestion" asp-controller="Question" asp-route-questionID="@question.QuestionID" style="color:#214d5a">
+                        <a asp-action="EditQuestion" asp-controller="Question" asp-route-questionID="@question.QuestionID"
+                           class="btn btn-sm btn-outline-primary me-2" title="Edit">
                             <i class="bi bi-pencil-square"></i>
                         </a>
 
-                        <a asp-action="DeleteQuestion" asp-controller="Question" asp-route-questionID="@question.QuestionID" style="color:red" onclick="alert('Are You Okay')">
+                        <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-@question.QuestionID" title="Delete">
                             <i class="bi bi-trash3"></i>
-                        </a>
+                        </button>
+                        <div class="modal fade" id="deleteModal-@question.QuestionID" tabindex="-1" aria-labelledby="deleteModalLabel-@question.QuestionID" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel-@question.QuestionID">Delete Confirmation</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to delete this question?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <a asp-action="DeleteQuestion" asp-controller="Question" asp-route-questionID="@question.QuestionID" class="btn btn-danger">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     }
                 </td>
+
             </tr>
         }
     </tbody>

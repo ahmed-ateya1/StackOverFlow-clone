@@ -20,10 +20,9 @@ namespace StackOverFlowClone.Core.ServicesContracts
         /// <summary>
         /// Updates an existing answer.
         /// </summary>
-        /// <param name="answerID">The unique identifier of the answer to update.</param>
-        /// <param name="request">The request containing updated answer details.</param>
+        /// <param name="answerUpdate">The request containing updated answer details.</param>
         /// <returns>The updated answer's response DTO.</returns>
-        Task<AnswerResponse> UpdateAnswerAsync(Guid? answerID, AnswerAddRequest? request);
+        Task<AnswerResponse> UpdateAnswerAsync(AnswerUpdateRequest? answerUpdate);
 
         /// <summary>
         /// Deletes an answer by its unique identifier.

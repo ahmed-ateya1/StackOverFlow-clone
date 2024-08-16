@@ -1,6 +1,7 @@
 ﻿using Azure.Core;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using StackOverFlowClone.Core.Domain.Entites;
 using StackOverFlowClone.Core.Domain.IdentityEntites;
 using StackOverFlowClone.Core.DTO;
 using StackOverFlowClone.Core.ServicesContracts;
@@ -36,8 +37,8 @@ namespace StackOverFlowClone.UI.Controllers
                 return Unauthorized();
             request.UserID = user.Id;
             await _answerServices.AddAnswerAsync(request);
-            await _questionServices.UpdateAnswersCountAsync(request.QuestionID,1);
-            return RedirectToAction("QuestionDetails","Question", new { questionID = request.QuestionID });
+            await _questionServices.UpdateAnswersCountAsync(request.QuestionID, 1);
+            return RedirectToAction("QuestionDetails", "Question", new { questionID = request.QuestionID });
         }
         [HttpPost]
         public async Task<IActionResult> ActionVote(VoteAddRequest voteAdd)
@@ -54,14 +55,14 @@ namespace StackOverFlowClone.UI.Controllers
             }
 
             voteAdd.UserID = user.Id;
-            var existingVote = await _voteServices.GetVoteAsync(user.Id,voteAdd.AnswerID);
+            var existingVote = await _voteServices.GetVoteAsync(user.Id, voteAdd.AnswerID);
 
             if (existingVote != null && voteAdd.VoteValue == 0)
             {
                 await _voteServices.DeleteVoteAsync(existingVote.VoteID);
                 await _answerServices.UpdateVotesCountAsync(voteAdd.AnswerID, -existingVote.VoteValue);
             }
-            else if(existingVote != null && voteAdd.VoteValue == -1 && existingVote.VoteValue == 1)
+            else if (existingVote != null && voteAdd.VoteValue == -1 && existingVote.VoteValue == 1)
             {
                 await _voteServices.AddOrUpdateVoteAsync(voteAdd);
                 await _answerServices.UpdateVotesCountAsync(voteAdd.AnswerID, voteAdd.VoteValue + voteAdd.VoteValue);
@@ -83,6 +84,46 @@ namespace StackOverFlowClone.UI.Controllers
 
             var questionID = question.QuestionID;
             return RedirectToAction("QuestionDetails", "Question", new { questionID });
+        }
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid? answerID)
+        {
+            var answerResponse = await _answerServices.GetAnswerByIDAsync(answerID);
+            if(answerResponse == null) return NotFound();
+
+            var answerUpdateRequest = new AnswerUpdateRequest()
+            {
+                AnswerID = answerResponse.AnswerID,
+                QuestionID = answerResponse.QuestionID,
+                VotesCount = answerResponse.VotesCount,
+                UserID = answerResponse.UserID,
+                AnswerDateAndTime = answerResponse.AnswerDateAndTime,
+                AnswerText = answerResponse.AnswerText,
+            };
+
+            return View(answerUpdateRequest);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(AnswerUpdateRequest request)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(request);
+            }
+            await _answerServices.UpdateAnswerAsync(request);
+            return RedirectToAction("QuestionDetails", "Question", new { questionID = request.QuestionID });
+        }
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid? answerID)
+        {
+            var answer = await _answerServices.GetAnswerByIDAsync(answerID);
+            if(answer == null) return NotFound();
+            var questionID = answer.QuestionID;
+
+            await _answerServices.DeleteAnswerAsync(answerID);
+            await _questionServices.UpdateAnswersCountAsync(questionID, -1);
+            return RedirectToAction("QuestionDetails", "Question", new { questionID = questionID });
         }
 
     }

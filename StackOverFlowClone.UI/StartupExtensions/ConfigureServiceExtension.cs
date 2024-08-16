@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using StackOverFlowClone.Core.Domain.IdentityEntites;
@@ -24,7 +25,15 @@ namespace StackOverFlowClone.UI.StartupExtensions
                 .AddDefaultTokenProviders()
                 .AddUserStore<UserStore<ApplicationUser, ApplicationRole, AppDbContext, Guid>>()
                 .AddRoleStore<RoleStore<ApplicationRole, AppDbContext, Guid>>();
-
+            services.AddAuthorization(options =>
+            {
+                options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser().Build();
+            });
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LogoutPath = "/Account/Login";
+            });
             services.AddScoped<IQuestionRepository, QuestionRepository>();
             services.AddScoped<IAnswerRepository, AnswerRepository>();
             services.AddScoped<IVoteRepository, VoteRepository>();

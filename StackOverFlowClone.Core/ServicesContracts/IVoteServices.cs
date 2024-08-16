@@ -40,5 +40,6 @@ namespace StackOverFlowClone.Core.ServicesContracts
         Task<int> UserIsVotedAsync(Guid? userID, Guid? answerID);
         Task<VoteResponse> GetVoteByVoteID(Guid? voteID);
         Task<IEnumerable<ApplicationUser>> GetAllUserVotedInAnswer(Guid? answerID);
+        Task<int>GetTotalVotesCountAsync(Guid? answerID);
     }
 }

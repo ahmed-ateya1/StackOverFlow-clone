@@ -69,25 +69,21 @@ namespace StackOverFlowClone.Core.Services
             return answer.ToAnswerResponse();
         }
 
-        public async Task<AnswerResponse> UpdateAnswerAsync(Guid? answerID, AnswerAddRequest? request)
+        public async Task<AnswerResponse> UpdateAnswerAsync(AnswerUpdateRequest? answerUpdate)
         {
-            if (answerID == null)
-                throw new ArgumentNullException(nameof(answerID));
+            if (answerUpdate == null)
+                throw new ArgumentNullException(nameof(answerUpdate));
 
-            if (request == null)
-                throw new ArgumentNullException(nameof(request));
+            ValidationModel.ValidateModel(answerUpdate);
 
-            ValidationModel.ValidateModel(request);
-
-            var answer = await _answerRepository.GetAnswerByID(answerID.Value);
+            var answer = await _answerRepository.GetAnswerByID(answerUpdate.AnswerID);
 
             if (answer == null)
                 throw new KeyNotFoundException("Answer not found.");
 
-            answer.AnswerText = request.AnswerText;
-            answer.QuestionID = request.QuestionID;
+            answer.AnswerText = answerUpdate.AnswerText;
+            answer.QuestionID = answerUpdate.QuestionID;
             answer.AnswerDateAndTime = DateTime.Now;
-            answer.UserID = request.UserID;
 
             await _answerRepository.UpdateAnswer(answer);
 

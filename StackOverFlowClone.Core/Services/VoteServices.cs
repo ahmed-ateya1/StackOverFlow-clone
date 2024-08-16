@@ -57,6 +57,13 @@ namespace StackOverFlowClone.Core.Services
             return await _voteRepository.GetAllUserVotedInAnswer(answerID.Value);
         }
 
+        public async Task<int> GetTotalVotesCountAsync(Guid? answerID)
+        {
+            if(answerID == null)
+                throw new ArgumentNullException(nameof(answerID));
+            return await _voteRepository.GetTotalVotesCount(answerID.Value);
+        }
+
         public async Task<VoteResponse> GetVoteAsync(Guid? userID, Guid? answerID)
         {
             if (userID == null || answerID == null)

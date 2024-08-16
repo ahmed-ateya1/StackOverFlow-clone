@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StackOverFlowClone.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+106497250c8bd112a7d06c43ecf94eaabf80d7eb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c447348ca20663d0676f4e9517ee28bbd818888d")]
 [assembly: System.Reflection.AssemblyProductAttribute("StackOverFlowClone.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StackOverFlowClone.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

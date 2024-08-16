@@ -23,9 +23,6 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
                     </ul>
                     <ul class="navbar-nav ">
                         @if(!User.Identity.IsAuthenticated)
@@ -39,6 +36,9 @@
                         }
                         else
                         {
+                            <li class="nav-item">
+                               @User.Identity.Name
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
                             </li>

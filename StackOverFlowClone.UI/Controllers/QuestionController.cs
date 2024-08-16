@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using StackOverFlowClone.Core.Domain.Entites;
@@ -28,6 +29,7 @@ namespace StackOverFlowClone.UI.Controllers
             _answerServices = answerServices;
         }
         [Route("/")]
+        [AllowAnonymous]
         public async Task<IActionResult> Index(string searchString = null)
         {
             var questions = await _questionServices.GetAllFilteredQuestions(searchString);
@@ -122,6 +124,7 @@ namespace StackOverFlowClone.UI.Controllers
             return RedirectToAction("Index", "Home");
         }
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> QuestionDetails(Guid? questionID)
         {
             if (questionID == null)
@@ -139,6 +142,7 @@ namespace StackOverFlowClone.UI.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (user != null && user.Id != question.UserID)
             {
+                ViewBag.userID = user.Id;
                 await _questionServices.IncrementViewCountAsync(questionID.Value);
             }
 

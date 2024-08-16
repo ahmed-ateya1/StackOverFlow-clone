@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using StackOverFlowClone.Core.Domain.IdentityEntites;
 using StackOverFlowClone.Core.DTO;
@@ -6,6 +7,7 @@ using StackOverFlowClone.Core.Enumeration;
 
 namespace StackOverFlowClone.UI.Controllers
 {
+    [AllowAnonymous]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

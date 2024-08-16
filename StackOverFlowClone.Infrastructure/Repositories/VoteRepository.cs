@@ -59,6 +59,13 @@ namespace StackOverFlowClone.Infrastructure.Repositories
             return users ?? new List<ApplicationUser>();
         }
 
+        public async Task<int> GetTotalVotesCount(Guid answerID)
+        {
+            return await _db.Votes
+                .Where(x => x.AnswerID == answerID)
+                .SumAsync(x => x.VoteValue);
+        }
+
         /// <summary>
         /// Retrieves a vote based on user ID and answer ID.
         /// </summary>

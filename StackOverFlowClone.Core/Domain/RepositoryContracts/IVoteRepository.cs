@@ -45,5 +45,6 @@ namespace StackOverFlowClone.Core.Domain.RepositoryContracts
         Task<IEnumerable<ApplicationUser>> GetAllUserVotedInAnswer(Guid answerID);
 
         Task<bool> DeleteVote(Guid voteID);
+        Task<int> GetTotalVotesCount(Guid answerID);
     }
 }

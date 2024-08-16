@@ -1,5 +1,4 @@
-﻿
-@model QuestionDetailsViewModel
+﻿@model QuestionDetailsViewModel
 @inject IVoteServices _voteServices
 @{
     ViewData["Title"] = "Question Details";
@@ -91,7 +90,7 @@
     .vote-container {
         position: relative;
         display: inline-block;
-        width: 24px; 
+        width: 24px;
         height: 48px;
     }
 
@@ -121,12 +120,12 @@
         .down-vote:hover {
             color: red;
         }
-
 </style>
+
 <a asp-action="Index" asp-controller="Question" class="btn btn-primary mb-3 mt-3">
-    <i class="bi bi-skip-backward-btn-fill"></i>
-    Back
+    <i class="bi bi-skip-backward-btn-fill"></i> Back
 </a>
+
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10">
@@ -177,39 +176,71 @@
                         <div class="answer mb-4">
                             <div class="d-flex justify-content-between align-items-center">
                                 <small class="text-muted">Answered by <strong>@answer.UserName</strong> on @answer.AnswerDateAndTime.ToString("f")</small>
+                                @if (User.Identity.IsAuthenticated && answer.UserName == User.Identity.Name)
+                                {
+                                    <div>
+                                        <a asp-action="Edit" asp-controller="Answer" asp-route-answerID="@answer.AnswerID" class="btn btn-sm btn-outline-primary me-2" title="Edit">
+                                            <i class="bi bi-pencil-square"></i> Edit
+                                        </a>
+                                        <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-@answer.AnswerID" title="Delete">
+                                            <i class="bi bi-trash3"></i> Delete
+                                        </button>
+
+                                        <!-- Delete Confirmation Modal -->
+                                        <div class="modal fade" id="deleteModal-@answer.AnswerID" tabindex="-1" aria-labelledby="deleteModalLabel-@answer.AnswerID" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="deleteModalLabel-@answer.AnswerID">Delete Confirmation</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Are you sure you want to delete this answer?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                        <a asp-action="Delete" asp-controller="Answer" asp-route-answerID="@answer.AnswerID" class="btn btn-danger">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
                             </div>
                             <p class="mt-2">@answer.AnswerText</p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <div class="vote-container">
-                                    @{
-                                        int voteValue = await _voteServices.UserIsVotedAsync(answer.UserID, answer.AnswerID);
-                                    }
+                                @if(User.Identity.IsAuthenticated)
+                                {
+                                    <div class="vote-container">
+                                        @{
+                                            int voteValue = await _voteServices.UserIsVotedAsync(answer.UserID, answer.AnswerID);
+                                        }
 
-                                    <!-- Upvote button -->
-                                    <form asp-action="ActionVote" asp-controller="Answer" asp-route-AnswerID="@answer.AnswerID" method="post">
-                                        <input type="hidden" name="VoteValue" value="@(voteValue == 1 ? 0 : 1)" />
-                                        <button type="submit" class="vote-button up-vote" style="color:@(voteValue == 1 ? "green" : "inherit")">
-                                            <i class="bi bi-arrow-up-square"></i>
-                                        </button>
-                                    </form>
+                                        <!-- Upvote button -->
+                                        <form asp-action="ActionVote" asp-controller="Answer" asp-route-AnswerID="@answer.AnswerID" method="post">
+                                            <input type="hidden" name="VoteValue" value="@(voteValue == 1 ? 0 : 1)" />
+                                            <button type="submit" class="vote-button up-vote" style="color:@(voteValue == 1 ? "green" : "inherit")">
+                                                <i class="bi bi-arrow-up-square"></i>
+                                            </button>
+                                        </form>
 
-                                    <!-- Downvote button -->
-                                    <form asp-action="ActionVote" asp-controller="Answer" asp-route-AnswerID="@answer.AnswerID" method="post">
-                                        <input type="hidden" name="VoteValue" value="@(voteValue == -1 ? 0 : -1)" />
-                                        <button type="submit" class="vote-button down-vote" style="color:@(voteValue == -1 ? "red" : "inherit")">
-                                            <i class="bi bi-arrow-down-square"></i>
-                                        </button>
-                                    </form>
-                                </div>
+                                        <!-- Downvote button -->
+                                        <form asp-action="ActionVote" asp-controller="Answer" asp-route-AnswerID="@answer.AnswerID" method="post">
+                                            <input type="hidden" name="VoteValue" value="@(voteValue == -1 ? 0 : -1)" />
+                                            <button type="submit" class="vote-button down-vote" style="color:@(voteValue == -1 ? "red" : "inherit")">
+                                                <i class="bi bi-arrow-down-square"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                }
                                 <span class="badge bg-primary" id="votes-count-@answer.AnswerID">@answer.VotesCount</span>
                             </div>
                             <hr />
                         </div>
                     }
-
-
                 </div>
             </div>
+
             @if (User.Identity.IsAuthenticated)
             {
                 <div class="card shadow-lg">
@@ -219,18 +250,18 @@
                     <div class="card-body">
                         <button class="btn btn-primary mb-3" id="replyButton" onclick="toggleReplyForm()">Reply</button>
                         <div id="replyForm" class="d-none">
-                            <form method="post" asp-action="ReplyToQuestion" asp-controller="Answer">
-                                <div class="form-group">
-                                    <textarea class="form-control" name="AnswerText" rows="5" placeholder="Enter your answer here..." required></textarea>
-                                </div>
+                            <form asp-action="ReplyToQuestion" asp-controller="Answer" method="post">
                                 <input type="hidden" name="QuestionID" value="@Model.Question.QuestionID" />
-                                <button type="submit" class="btn btn-success mt-3">Submit Answer</button>
+                                <div class="mb-3">
+                                    <textarea name="AnswerText" class="form-control" rows="4" placeholder="Write your answer here..." required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-success">Submit Answer</button>
                             </form>
                         </div>
                     </div>
                 </div>
             }
-            
+
         </div>
     </div>
 </div>
