@@ -64,9 +64,6 @@ This project follows the principles of Clean Architecture, ensuring separation o
 - **Migrations**
 - **Repositories**
 
-
-## Getting Started
-
 ### Prerequisites
 
 Ensure you have the following installed on your machine:
