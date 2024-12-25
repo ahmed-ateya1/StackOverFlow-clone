@@ -113,5 +113,5 @@ Contributions are welcome! Please fork the repository and use a feature branch. 
 
 ### Contact
 
-If you have any questions or feedback, feel free to contact the project maintainer at your.email@example.com.
+If you have any questions or feedback, feel free to contact the project maintainer at ahmed.ateya12348@gmail.com
 
